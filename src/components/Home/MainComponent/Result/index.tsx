@@ -8,7 +8,7 @@ const systemMessage = {
   //  Explain things like you're talking to a software professional with 5 years of experience.
   role: "system",
   content:
-    "Explain things like you're talking to a software professional with 2 years of experience.",
+    "I'm going to use your response to build a quize , so dont be nice i only need quastions and with out numerating them  ",
 };
 
 type MessagesType = {
@@ -17,7 +17,11 @@ type MessagesType = {
   sender: string;
 };
 
-export type QuastionListType = { question: string; options: string[] };
+export type QuastionListType = {
+  question: string;
+  options: string[];
+  id: number;
+};
 
 const Index = ({ note }: { note: string }) => {
   const [messages, setMessages] = useState<MessagesType[]>([
@@ -86,11 +90,12 @@ const Index = ({ note }: { note: string }) => {
         // build list from gtpResponse
         let questionnaire: QuastionListType[] = data.choices[0].message.content
           .split("\n\n")
-          .map((block: string) => {
+          .map((block: string, index: number) => {
             const lines = block.split("\n");
             return {
               question: lines[0],
               options: lines.slice(1).map((option) => option.slice(3)),
+              id: index + 1,
             };
           });
 
@@ -118,12 +123,24 @@ const Index = ({ note }: { note: string }) => {
   return (
     <div className="w-full ">
       {note !== "" && (
-        <button className="w-" onClick={() => handleSend(note)}>
-          Send{" "}
-        </button>
+        <div className="w-full py-3 flex items-center justify-center">
+          <button
+            className="w-[100px] bg-blue-300 rounded-md"
+            onClick={() => handleSend(note)}
+          >
+            Send{" "}
+          </button>
+        </div>
       )}
 
-      <QuastionResult questionnaire={QuastionList} />
+      {isTyping ? (
+        <div>loading ... </div>
+      ) : (
+        <QuastionResult
+          questionnaire={QuastionList}
+          setQuastionList={setQuastionList}
+        />
+      )}
     </div>
   );
 };
