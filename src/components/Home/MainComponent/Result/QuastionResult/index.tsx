@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { QuastionListType } from "..";
 import Link from "next/link";
 import Card from "./Card";
+import UpdateCard from "./NewCard";
 type Props = {
   questionnaire: QuastionListType[];
   setQuastionList: React.Dispatch<React.SetStateAction<QuastionListType[]>>;
@@ -24,18 +25,13 @@ const Index = ({ questionnaire, setQuastionList }: Props) => {
     )
       .then((response) => response.text())
       .then((text) => {
-        console.log(text);
-
-        // // parse HTML response to get the URL
-        // const parser = new DOMParser();
-        // const htmlDoc = parser.parseFromString(text, "text/html");
-        // console.log(htmlDoc);
         setformLink(text);
-        // const formURL = htmlDoc.body.textContent;
-        console.log("Form URL:", text);
       })
       .catch((error) => console.error("Error:", error));
   };
+
+  console.log(questionnaire);
+
   return (
     <div className="w-full ">
       <div className="w-full py-4 container grid grid-cols-3 gap-4 ">
@@ -46,6 +42,11 @@ const Index = ({ questionnaire, setQuastionList }: Props) => {
             setQuastionList={setQuastionList}
           />
         ))}
+
+        <UpdateCard
+          questionnaire={questionnaire}
+          setQuastionList={setQuastionList}
+        />
       </div>
 
       {questionnaire.length !== 0 && (

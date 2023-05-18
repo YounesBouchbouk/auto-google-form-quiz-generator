@@ -30,38 +30,49 @@ const Index = ({ note, setNote }: Props) => {
       mic.interimResults = true;
       mic.lang = "en-US";
 
-      handleListen();
+      mic.onstart = () => {
+        console.log("Mics on");
+      };
+
+      mic.onresult = (event: any) => {
+        const transcript: any = Array.from(event.results)
+          .map((result: any) => result[0])
+          .map((result) => result.transcript)
+          .join("");
+        console.log(transcript);
+        setNote(transcript);
+      };
+
+      mic.onerror = (event: any) => {
+        console.log(event.error);
+      };
+
+      mic.onend = () => {
+        if (isListening) {
+          console.log("continue..");
+          mic.start();
+        } else {
+          console.log("Stopped Mic on Click");
+        }
+      };
     }
+
+    handleListen();
+
+    // Cleanup function to stop recognition when component is unmounted
+    return () => {
+      if (mic) {
+        mic.stop();
+      }
+    };
   }, [isListening]);
 
   const handleListen = () => {
     if (isListening) {
       mic.start();
-      mic.onend = () => {
-        console.log("continue..");
-        mic.start();
-      };
     } else {
       mic.stop();
-      mic.onend = () => {
-        console.log("Stopped Mic on Click");
-      };
     }
-    mic.onstart = () => {
-      console.log("Mics on");
-    };
-
-    mic.onresult = (event: any) => {
-      const transcript: any = Array.from(event.results)
-        .map((result: any) => result[0])
-        .map((result) => result.transcript)
-        .join("");
-      console.log(transcript);
-      setNote(transcript);
-      mic.onerror = (event: any) => {
-        console.log(event.error);
-      };
-    };
   };
 
   return (
