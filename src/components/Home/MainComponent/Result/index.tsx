@@ -8,7 +8,7 @@ const systemMessage = {
   //  Explain things like you're talking to a software professional with 5 years of experience.
   role: "system",
   content:
-    "I'm going to use your response to build a quize , so dont be nice i only need quastions and with out numerating them  ",
+    "your job here is to build quizs for google form  , generate directly the quastion with out numuration the quastion",
 };
 
 type MessagesType = {
@@ -95,7 +95,7 @@ const Index = ({ note }: { note: string }) => {
             return {
               question: lines[0],
               options: lines.slice(1).map((option) => option.slice(3)),
-              id: index + 1,
+              id: index,
             };
           });
 
@@ -133,14 +133,16 @@ const Index = ({ note }: { note: string }) => {
         </div>
       )}
 
-      {isTyping ? (
-        <div>loading ... </div>
-      ) : (
-        <QuastionResult
-          questionnaire={QuastionList}
-          setQuastionList={setQuastionList}
-        />
-      )}
+      <div className="px-5">
+        {isTyping ? (
+          <div>loading ... </div>
+        ) : (
+          <QuastionResult
+            questionnaire={QuastionList}
+            setQuastionList={setQuastionList}
+          />
+        )}
+      </div>
     </div>
   );
 };

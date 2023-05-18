@@ -29,7 +29,7 @@ const Index = ({ question, setQuastionList }: Props) => {
     setHideInput(true);
   };
 
-  const handlRemove = (value: string) => {
+  const handlRemoveItem = (value: string) => {
     setQuastionList((state) =>
       state.map((qst: QuastionListType) => {
         if (qst.id === question.id) {
@@ -45,9 +45,24 @@ const Index = ({ question, setQuastionList }: Props) => {
     );
   };
 
+  const handlRemove = () => {
+    setQuastionList((state) =>
+      state.filter((qst: QuastionListType) => qst.id !== question.id)
+    );
+  };
+
   return (
     <div className="col-span-1 py-2 ">
-      <h2 className="font-bold">{question.question}</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="font-bold">{question.question}</h2>
+
+        <p
+          className=" text-red-600 cursor-pointer hover:font-bold"
+          onClick={handlRemove}
+        >
+          delete
+        </p>
+      </div>
 
       <ul className="px-4 py-2">
         {question.options.map((li) => (
@@ -55,7 +70,7 @@ const Index = ({ question, setQuastionList }: Props) => {
             * {li}{" "}
             <span
               className="text-red-600 cursor-pointer hover:font-bold"
-              onClick={() => handlRemove(li)}
+              onClick={() => handlRemoveItem(li)}
             >
               x
             </span>
