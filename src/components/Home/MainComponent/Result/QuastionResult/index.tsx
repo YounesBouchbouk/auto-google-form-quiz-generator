@@ -4,14 +4,15 @@ import Link from "next/link";
 import Card from "./Card";
 import NewQuastionCard from "./NewCard";
 import useStore from "@/components/store/useStore";
+import { EnvSlice } from "@/components/store/envSlice";
 type Props = {
   questionnaire: QuastionListType[];
   setQuastionList: React.Dispatch<React.SetStateAction<QuastionListType[]>>;
 };
 
 const Index = ({ questionnaire, setQuastionList }: Props) => {
-  const [formLink, setformLink] = useState("");
-  const apiUrl = useStore((state) => state.apiURL);
+  const [formLink, setformLink] = useState<string>("");
+  const apiUrl = useStore((state: EnvSlice) => state.apiURL);
   const handleGenerateGoogleForm = async () => {
     fetch(apiUrl, {
       method: "POST",
