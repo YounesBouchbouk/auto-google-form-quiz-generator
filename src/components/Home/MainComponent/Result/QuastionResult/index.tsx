@@ -2,35 +2,33 @@ import React, { useState } from "react";
 import { QuastionListType } from "..";
 import Link from "next/link";
 import Card from "./Card";
-import UpdateCard from "./NewCard";
+import NewQuastionCard from "./NewCard";
+import useStore from "@/components/store/useStore";
+import { EnvSlice } from "@/components/store/envSlice";
 type Props = {
   questionnaire: QuastionListType[];
   setQuastionList: React.Dispatch<React.SetStateAction<QuastionListType[]>>;
 };
 
 const Index = ({ questionnaire, setQuastionList }: Props) => {
-  const [formLink, setformLink] = useState("");
+  const [formLink, setformLink] = useState<string>("");
+  const apiUrl = useStore((state: EnvSlice) => state.apiURL);
   const handleGenerateGoogleForm = async () => {
-    fetch(
-      "https://script.google.com/macros/s/AKfycbyL8VmMxyBHNcRSW5nWMErsfy9Js5dUOllTY36kvia6zwbZKne_j4dPWnLfcK70DT7M/exec",
-      {
-        method: "POST",
-        // mode: "no-cors",
-        redirect: "follow",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8",
-        },
-        body: JSON.stringify(questionnaire),
-      }
-    )
+    fetch(apiUrl, {
+      method: "POST",
+      // mode: "no-cors",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify(questionnaire),
+    })
       .then((response) => response.text())
       .then((text) => {
         setformLink(text);
       })
       .catch((error) => console.error("Error:", error));
   };
-
-  console.log(questionnaire);
 
   return (
     <div className="w-full ">
@@ -43,10 +41,12 @@ const Index = ({ questionnaire, setQuastionList }: Props) => {
           />
         ))}
 
-        <UpdateCard
-          questionnaire={questionnaire}
-          setQuastionList={setQuastionList}
-        />
+        {questionnaire.length > 0 && (
+          <NewQuastionCard
+            questionnaire={questionnaire}
+            setQuastionList={setQuastionList}
+          />
+        )}
       </div>
 
       {questionnaire.length !== 0 && (
