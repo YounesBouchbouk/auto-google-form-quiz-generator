@@ -2,6 +2,7 @@
 import { log } from "console";
 import React, { useState } from "react";
 import QuastionResult from "./QuastionResult";
+import useStore from "@/components/store/useStore";
 const API_KEY = "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";
 // "Explain things like you would to a 10 year old learning how to code."
 const systemMessage = {
@@ -34,7 +35,7 @@ const Index = ({ note }: { note: string }) => {
 
   const [QuastionList, setQuastionList] = useState<QuastionListType[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-
+  const openAI_api = useStore((state) => state.openAPI);
   const handleSend = async (message: string) => {
     const newMessage = {
       message,
@@ -78,7 +79,7 @@ const Index = ({ note }: { note: string }) => {
     await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
-        Authorization: "Bearer " + API_KEY,
+        Authorization: "Bearer " + openAI_api,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(apiRequestBody),
@@ -104,8 +105,6 @@ const Index = ({ note }: { note: string }) => {
         questionnaire = questionnaire.filter(
           (block) => block.options.length !== 0
         );
-
-        console.log(questionnaire);
 
         setQuastionList(questionnaire);
 
