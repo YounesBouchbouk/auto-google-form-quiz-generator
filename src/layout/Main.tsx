@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { EnvSlice } from "@/components/store/envSlice";
 import useStore from "@/components/store/useStore";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -7,7 +8,7 @@ export interface IMainLayoutProps {
   children: React.ReactNode;
 }
 const Wrapper = ({ children }: IMainLayoutProps) => {
-  const getSavedEnv = useStore((state) => state.getSavedEnv);
+  const getSavedEnv = useStore((state: EnvSlice) => state.getSavedEnv);
   const router = useRouter();
   const [render] = useState(true);
 

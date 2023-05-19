@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { log } from "console";
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
 import QuastionResult from "./QuastionResult";
 import useStore from "@/components/store/useStore";
-const API_KEY = "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";
+import { EnvSlice } from "@/components/store/envSlice";
 // "Explain things like you would to a 10 year old learning how to code."
 const systemMessage = {
   //  Explain things like you're talking to a software professional with 5 years of experience.
@@ -35,7 +34,7 @@ const Index = ({ note }: { note: string }) => {
 
   const [QuastionList, setQuastionList] = useState<QuastionListType[]>([]);
   const [isTyping, setIsTyping] = useState(false);
-  const openAI_api = useStore((state) => state.openAPI);
+  const openAI_api = useStore((state: EnvSlice) => state.openAPI);
   const handleSend = async (message: string) => {
     const newMessage = {
       message,

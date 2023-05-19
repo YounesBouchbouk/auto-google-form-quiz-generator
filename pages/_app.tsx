@@ -5,8 +5,7 @@ import type { AppProps } from "next/app";
 import "@styles/output.css";
 import { SWRConfig } from "swr";
 import toast from "react-hot-toast";
-// import Script from "next/script";
-// import useStore from '@/store/useStore'
+
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
