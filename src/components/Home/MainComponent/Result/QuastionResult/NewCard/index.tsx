@@ -1,19 +1,22 @@
 import React, { useState } from "react";
 import { QuastionListType } from "../..";
+import { appDataSlice } from "@/components/store/appData";
+import useStore from "@/components/store/useStore";
 
-type Props = {
-  questionnaire: QuastionListType[];
-  setQuastionList: React.Dispatch<React.SetStateAction<QuastionListType[]>>;
-};
-
-const Index = ({ questionnaire, setQuastionList }: Props) => {
+const Index = () => {
   const [newOption, setnewOption] = useState("");
   const [hideInput, setHideInput] = useState(true);
+  const questionnaire = useStore((state: appDataSlice) => state.questionaire);
+  const setQuastionList = useStore(
+    (state: appDataSlice) => state.setQuestionaire
+  );
+
   const [newQuestion, setnewQuestion] = useState<QuastionListType>({
     id: questionnaire.length + 1,
     options: [],
     question: "",
   });
+
   const [hideForm, sethideForm] = useState(true);
 
   const handlAddItem = () => {
@@ -37,14 +40,15 @@ const Index = ({ questionnaire, setQuastionList }: Props) => {
   };
 
   const HandleSave = () => {
-    setQuastionList((state) =>
-      state.concat([
+    const newQuestios = questionnaire
+      .concat([
         {
           ...newQuestion,
           question: `${newQuestion.id}. ${newQuestion.question}`,
         },
       ])
-    );
+      .slice();
+    setQuastionList(newQuestios);
 
     setnewQuestion({ id: questionnaire.length + 1, options: [], question: "" });
     sethideForm(true);
