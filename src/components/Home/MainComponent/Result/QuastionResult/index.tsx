@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-import { QuastionListType } from "..";
-import Link from "next/link";
+import React from "react";
 import Card from "./Card";
 import NewQuastionCard from "./NewCard";
 import useStore from "@/components/store/useStore";
 import { EnvSlice } from "@/components/store/envSlice";
-type Props = {
-  questionnaire: QuastionListType[];
-  setQuastionList: React.Dispatch<React.SetStateAction<QuastionListType[]>>;
-};
+import { appDataSlice } from "@/components/store/appData";
 
-const Index = ({ questionnaire, setQuastionList }: Props) => {
-  const [formLink, setformLink] = useState<string>("");
+const Index = () => {
+  const questionnaire = useStore((state: appDataSlice) => state.questionaire);
+  const generatedForms = useStore(
+    (state: appDataSlice) => state.generatedForms
+  );
+  const setGeneratedForms = useStore(
+    (state: appDataSlice) => state.setGeneratedForms
+  );
+
   const apiUrl = useStore((state: EnvSlice) => state.apiURL);
+
   const handleGenerateGoogleForm = async () => {
     fetch(apiUrl, {
       method: "POST",
@@ -25,7 +28,11 @@ const Index = ({ questionnaire, setQuastionList }: Props) => {
     })
       .then((response) => response.text())
       .then((text) => {
-        setformLink(text);
+        const date = new Date();
+        setGeneratedForms(
+          generatedForms.concat({ createdAt: date, link: text, title: "ttl" })
+        );
+        // setformLink(text);
       })
       .catch((error) => console.error("Error:", error));
   };
@@ -34,19 +41,10 @@ const Index = ({ questionnaire, setQuastionList }: Props) => {
     <div className="w-full ">
       <div className="w-full py-4 container grid grid-cols-3 gap-4 ">
         {questionnaire.map((question, index) => (
-          <Card
-            question={question}
-            key={index}
-            setQuastionList={setQuastionList}
-          />
+          <Card question={question} key={index} />
         ))}
 
-        {questionnaire.length > 0 && (
-          <NewQuastionCard
-            questionnaire={questionnaire}
-            setQuastionList={setQuastionList}
-          />
-        )}
+        {questionnaire.length > 0 && <NewQuastionCard />}
       </div>
 
       {questionnaire.length !== 0 && (
@@ -56,8 +54,6 @@ const Index = ({ questionnaire, setQuastionList }: Props) => {
           </button>
         </div>
       )}
-
-      {formLink !== "" && <Link href={formLink}>{formLink}</Link>}
     </div>
   );
 };

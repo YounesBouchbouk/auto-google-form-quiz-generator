@@ -1,15 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import useStore from "@/components/store/useStore";
 import React, { useEffect, useState } from "react";
 import { useSpeechRecognition } from "react-speech-kit";
 
-type Props = {
-  setNote: React.Dispatch<React.SetStateAction<string>>;
-  note: string;
-};
-
-const Index = ({ note, setNote }: Props) => {
+const Index = () => {
+  const note = useStore((state) => state.note);
+  const setNote = useStore((state) => state.setNote);
   const { listen, listening, stop } = useSpeechRecognition({
     onResult: (result: string) => {
       setNote(result);

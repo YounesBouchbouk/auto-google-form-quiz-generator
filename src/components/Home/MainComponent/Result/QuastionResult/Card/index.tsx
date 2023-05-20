@@ -1,54 +1,57 @@
 import React, { useState } from "react";
 import { QuastionListType } from "../..";
+import useStore from "@/components/store/useStore";
 
 type Props = {
   question: QuastionListType;
-  setQuastionList: React.Dispatch<React.SetStateAction<QuastionListType[]>>;
 };
 
-const Index = ({ question, setQuastionList }: Props) => {
+const Index = ({ question }: Props) => {
   const [newOption, setnewOption] = useState("");
   const [hideInput, setHideInput] = useState(true);
+  const setQuastionList = useStore((state) => state.setQuestionaire);
+  const questionaire = useStore((state) => state.questionaire);
 
   const handlAddItem = () => {
-    setQuastionList((state) =>
-      state.map((qst: QuastionListType) => {
-        if (qst.id === question.id) {
-          const newOptions = qst.options;
-          return {
-            ...qst,
-            options: newOptions.concat([newOption]),
-          };
-        } else {
-          return qst;
-        }
-      })
-    );
+    const newQuestions = questionaire.map((qst: QuastionListType) => {
+      if (qst.id === question.id) {
+        const newOptions = qst.options;
+        return {
+          ...qst,
+          options: newOptions.concat([newOption]),
+        };
+      } else {
+        return qst;
+      }
+    });
+
+    setQuastionList(newQuestions);
 
     setnewOption("");
     setHideInput(true);
   };
 
   const handlRemoveItem = (value: string) => {
-    setQuastionList((state) =>
-      state.map((qst: QuastionListType) => {
-        if (qst.id === question.id) {
-          const options = qst.options.filter((it) => it !== value);
-          return {
-            ...qst,
-            options,
-          };
-        } else {
-          return qst;
-        }
-      })
-    );
+    const newQuestions = questionaire.map((qst: QuastionListType) => {
+      if (qst.id === question.id) {
+        const options = qst.options.filter((it) => it !== value);
+        return {
+          ...qst,
+          options,
+        };
+      } else {
+        return qst;
+      }
+    });
+    setQuastionList(newQuestions);
   };
 
   const handlRemove = () => {
-    setQuastionList((state) =>
-      state.filter((qst: QuastionListType) => qst.id !== question.id)
+    const newQuestions = questionaire.filter(
+      (qst: QuastionListType) => qst.id !== question.id
     );
+
+    setQuastionList(newQuestions);
   };
 
   return (
