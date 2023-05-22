@@ -6,7 +6,13 @@ import { EnvSlice } from "@/components/store/envSlice";
 import { appDataSlice } from "@/components/store/appData";
 
 const Index = () => {
-  const questionnaire = useStore((state: appDataSlice) => state.questionaire);
+  const questionaire = useStore((state: appDataSlice) => state.questionaire);
+  const askForFullName = useStore((state) => state.askForFullName);
+  const askForEmail = useStore((state) => state.askForEmail);
+  const askForPhone = useStore((state) => state.askForPhone);
+  const title = useStore((state) => state.title);
+  const description = useStore((state) => state.description);
+
   const generatedForms = useStore(
     (state: appDataSlice) => state.generatedForms
   );
@@ -24,13 +30,25 @@ const Index = () => {
       headers: {
         "Content-Type": "text/plain;charset=utf-8",
       },
-      body: JSON.stringify(questionnaire),
+      body: JSON.stringify({
+        title: title,
+        description,
+        askName: askForFullName, // set to true if you want to ask for the user's name
+        askEmail: askForEmail, // set to true if you want to ask for the user's email
+        askPhone: askForPhone, // set to true if you want to ask for the user's phone
+        questionaire: questionaire,
+      }),
     })
       .then((response) => response.text())
       .then((text) => {
         const date = new Date();
         setGeneratedForms(
-          generatedForms.concat({ createdAt: date, link: text, title: "ttl" })
+          generatedForms.concat({
+            createdAt: date,
+            link: text,
+            title,
+            description,
+          })
         );
         // setformLink(text);
       })
@@ -40,14 +58,14 @@ const Index = () => {
   return (
     <div className="w-full ">
       <div className="w-full py-4 container grid grid-cols-3 gap-4 ">
-        {questionnaire.map((question, index) => (
+        {questionaire.map((question, index) => (
           <Card question={question} key={index} />
         ))}
 
-        {questionnaire.length > 0 && <NewQuastionCard />}
+        {questionaire.length > 0 && <NewQuastionCard />}
       </div>
 
-      {questionnaire.length !== 0 && (
+      {questionaire.length !== 0 && (
         <div className="flex items-center justify-center">
           <button onClick={handleGenerateGoogleForm}>
             Generate Google Form ?{" "}

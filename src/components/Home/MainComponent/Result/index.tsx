@@ -9,7 +9,7 @@ const systemMessage = {
   //  Explain things like you're talking to a software professional with 5 years of experience.
   role: "system",
   content:
-    "your job here is to build quizs for google form  , generate directly the quastion with out numuration the quastion",
+    "you are a quize generator so always generate quastion with choices if i didn't mention that",
 };
 
 type MessagesType = {
@@ -39,6 +39,7 @@ const Index = () => {
 
   const [isTyping, setIsTyping] = useState(false);
   const openAI_api = useStore((state: EnvSlice) => state.openAPI);
+
   const handleSend = async (message: string) => {
     const newMessage = {
       message,
