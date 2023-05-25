@@ -59,7 +59,7 @@ const Index = () => {
       <div className="col-span-1 py-2 ">
         <input
           type="text"
-          className=" font-bold py-1 w-full border-1 border-black"
+          className="px-2 py-1 w-full border-1 border-black"
           placeholder="write you new quastion ..."
           value={newQuestion.question}
           onChange={(e) =>
@@ -83,7 +83,7 @@ const Index = () => {
           <li>
             {hideInput && (
               <button
-                className="px-2 bg-slate-100"
+                className="px-2 bg-slate-100 text-xs py-1"
                 onClick={() => setHideInput((state) => !state)}
               >
                 + custom option
@@ -106,12 +106,15 @@ const Index = () => {
           )}
         </ul>
 
-        <div className="flex items-end justify-end">
-          <button className="text-blue-300 py-2" onClick={HandleSave}>
+        <div className="flex items-end justify-end gap-8">
+          <button
+            className="text-purple-600 bg-slate-50 px-5 py-2 rounded-xl text-small"
+            onClick={HandleSave}
+          >
             Save
           </button>
           <button
-            className="text-blue-300 py-2"
+            className=" py-2 bg-slate-50 px-5 rounded-xl text-small"
             onClick={() => sethideForm(true)}
           >
             cancel
@@ -121,12 +124,9 @@ const Index = () => {
     );
   } else {
     return (
-      <div className="col-span-1 py-2  w-full h-full bg-gray-300 rounded-md flex items-center justify-center">
-        <button
-          className="bg-white text-2xl"
-          onClick={() => sethideForm(false)}
-        >
-          +
+      <div className="col-span-1 py-2  w-full h-full bg-gray-100 rounded-md flex items-center justify-center">
+        <button className=" text-xl" onClick={() => sethideForm(false)}>
+          Add new question ?
         </button>
       </div>
     );

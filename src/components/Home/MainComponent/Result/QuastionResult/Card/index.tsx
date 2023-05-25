@@ -55,34 +55,36 @@ const Index = ({ question }: Props) => {
   };
 
   return (
-    <div className="col-span-1 py-2 ">
+    <div className="col-span-1 p-2 bg-slate-50 rounded-lg shadow-md  ">
       <div className="flex justify-between items-center">
-        <h2 className="font-bold">{question.question}</h2>
+        <p className="font-bold text-[14px]">{question.question}</p>
 
         <p
-          className=" text-red-600 cursor-pointer hover:font-bold"
+          className=" text-red-600 cursor-pointer  font-bold"
           onClick={handlRemove}
         >
-          delete
+          x
         </p>
       </div>
 
       <ul className="px-4 py-2">
         {question.options.map((li) => (
-          <li key={li}>
-            * {li}{" "}
+          <div key={li} className="flex items-center justify-between">
+            <p>
+              * <span className="text-[13px]">{li}</span>{" "}
+            </p>
             <span
-              className="text-red-600 cursor-pointer hover:font-bold"
+              className="text-red-400 cursor-pointer font-bold text-xs "
               onClick={() => handlRemoveItem(li)}
             >
               x
             </span>
-          </li>
+          </div>
         ))}
         <li>
           {hideInput && (
             <button
-              className="px-2 bg-slate-100"
+              className="px-2 bg-white rounded-md text-xsmall"
               onClick={() => setHideInput((state) => !state)}
             >
               + custom option
@@ -94,11 +96,11 @@ const Index = ({ question }: Props) => {
             *{" "}
             <input
               type="text"
-              className="py-1 px-2"
+              className=" px-2 text-xs py-1 rounded-md"
               placeholder="choice ..."
               onChange={(e) => setnewOption(e.target.value)}
               onKeyPress={(e) => {
-                e.key === "Enter" && handlAddItem();
+                e.key === "Enter" && newOption !== "" && handlAddItem();
               }}
             />
           </li>

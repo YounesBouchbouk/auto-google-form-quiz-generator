@@ -2,7 +2,7 @@ import Head from "next/head";
 // import { Inter } from "next/font/google";
 import { ReactElement } from "react";
 import { MainLayout } from "@/layout/Main";
-import Title from "@components/Home/Title";
+// import Title from "@components/Home/Title";
 import MainComponent from "@components/Home/MainComponent";
 
 export default function Home() {
@@ -14,8 +14,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-col mt-3  justify-start items-center ">
-        <Title />
+      <main className="flex flex-col mt-3 h-full  justify-start items-center w-full ">
         <MainComponent />
       </main>
     </>

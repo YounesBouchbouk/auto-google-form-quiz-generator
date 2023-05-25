@@ -100,7 +100,7 @@ const Moodle = () => {
       <textarea
         name=""
         onChange={(e) => setNote(e.target.value)}
-        className="  text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        className="   text-sm rounded-lg text-gray-100 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             // Handle the Enter key press here
@@ -133,6 +133,8 @@ const Moodle = () => {
           </div>
         )}
       </div>
+
+      <div className="w-full"></div>
     </div>
   );
 };

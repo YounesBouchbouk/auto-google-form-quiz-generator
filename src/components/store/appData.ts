@@ -15,6 +15,8 @@ export type generatedForms = {
 }
 
 export interface appDataSlice {
+    loading : boolean
+    globalStep : number
     note: string
     current_step : number 
     title : string
@@ -33,12 +35,18 @@ export interface appDataSlice {
     setAskForFullName : (state : boolean) => void
     setAskForEmail : (state : boolean) => void
     setAskForPhone : (state : boolean) => void
+    incrementStep: () => void
+    decrimentStep: () => void
+    changeLoading: () => void
+
   }
 
 
   const createAppDataSlice: StateCreator<appDataSlice> =  (set) => ({
     note: '',
+    loading : false , 
     title:"" ,
+    globalStep : 1,
     description :"" ,
     current_step : 1,
     questionaire : [],
@@ -54,7 +62,11 @@ export interface appDataSlice {
     setDescription : (description : string) => set({description}),
     setAskForFullName : (askForFullName : boolean) => set({askForFullName}),
     setAskForEmail : (askForEmail : boolean) => set({askForEmail}),
-    setAskForPhone : (askForPhone : boolean) => set({askForPhone})
+    setAskForPhone : (askForPhone : boolean) => set({askForPhone}),
+    incrementStep : () => set((state) => ({globalStep : state.globalStep + 1})),
+    decrimentStep : () => set((state) => ({globalStep : state.globalStep - 1})),
+    changeLoading : () => set((state) => ({loading : !state.loading}))
+
   })
   
   export default createAppDataSlice
