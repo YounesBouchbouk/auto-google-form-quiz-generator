@@ -36,12 +36,21 @@ const Wrapper = ({ children }: IMainLayoutProps) => {
   return render ? <>{children}</> : <></>;
 };
 export function MainLayout({ children }: IMainLayoutProps) {
+  const appLoading = useStore((state) => state.loading);
+
   return (
     <Wrapper>
       <Toaster />
-      <div className="min-h-screen w-full flex items-center justify-center bg-gray-100">
-        <div className="w-3/4 min-h-[700px] bg-white rounded-lg p-4 flex flex-col gap-3 items-center justify-center  ">
-          {children}
+      <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
+        <div className="w-3/4 relative min-h-[700px] bg-white rounded-lg p-4 flex flex-col gap-3 items-center justify-center  ">
+          <div className="w-full">{children}</div>
+          {appLoading && (
+            <div className="bg-white/90 top-0 left-0 h-full w-full absolute flex items-center justify-center ">
+              <p className="text-black text-small font-bold animate-ping">
+                Loading ......
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </Wrapper>

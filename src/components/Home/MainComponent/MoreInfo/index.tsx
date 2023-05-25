@@ -1,12 +1,77 @@
+import { appDataSlice } from "@/components/store/appData";
+import { EnvSlice } from "@/components/store/envSlice";
 import useStore from "@/components/store/useStore";
 import React from "react";
+import { toast } from "react-hot-toast";
+
+export type QuastionListType = {
+  question: string;
+  options: string[];
+  id: number;
+};
 
 const Index = () => {
+  const questionaire = useStore((state: appDataSlice) => state.questionaire);
   const setAskFormFN = useStore((state) => state.setAskForFullName);
   const setAskFormEmail = useStore((state) => state.setAskForEmail);
   const setAskFormPhone = useStore((state) => state.setAskForPhone);
   const setTitleOfInput = useStore((state) => state.setTitle);
   const setDescription = useStore((state) => state.setDescription);
+
+  const incrementStep = useStore((state) => state.incrementStep);
+
+  const askForFullName = useStore((state) => state.askForFullName);
+  const askForEmail = useStore((state) => state.askForEmail);
+  const askForPhone = useStore((state) => state.askForPhone);
+  const title = useStore((state) => state.title);
+  const description = useStore((state) => state.description);
+  const changeLoading = useStore((state) => state.changeLoading);
+  const generatedForms = useStore(
+    (state: appDataSlice) => state.generatedForms
+  );
+  const setGeneratedForms = useStore(
+    (state: appDataSlice) => state.setGeneratedForms
+  );
+
+  const apiUrl = useStore((state: EnvSlice) => state.apiURL);
+
+  const handleGenerateGoogleForm = async () => {
+    changeLoading();
+    fetch(apiUrl, {
+      method: "POST",
+      // mode: "no-cors",
+      redirect: "follow",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8",
+      },
+      body: JSON.stringify({
+        title: title,
+        description,
+        askName: askForFullName, // set to true if you want to ask for the user's name
+        askEmail: askForEmail, // set to true if you want to ask for the user's email
+        askPhone: askForPhone, // set to true if you want to ask for the user's phone
+        questionaire: questionaire,
+      }),
+    })
+      .then((response) => response.text())
+      .then((text) => {
+        const date = new Date();
+        setGeneratedForms(
+          generatedForms.concat({
+            createdAt: date,
+            link: text,
+            title,
+            description,
+          })
+        );
+        changeLoading();
+        incrementStep();
+      })
+      .catch((error) => {
+        changeLoading();
+        toast.error(error);
+      });
+  };
 
   return (
     <div className="w-full">
@@ -77,6 +142,17 @@ const Index = () => {
           </label>
         </div>
       </div>
+
+      {questionaire.length !== 0 && (
+        <div className="flex items-center justify-center">
+          <button
+            onClick={handleGenerateGoogleForm}
+            className="px-8 py-2 rounded-lg bg-purple-500 my-4 hover:bg-purple-400 text-white"
+          >
+            Generate Google Form ?{" "}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

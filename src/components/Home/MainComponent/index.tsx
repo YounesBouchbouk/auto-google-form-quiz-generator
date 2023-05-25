@@ -13,9 +13,9 @@ const Index = () => {
     switch (step) {
       case 1:
         return <Recorder />;
-      case 2:
-        return <MoreInfo />;
       case 3:
+        return <MoreInfo />;
+      case 2:
         return <Result />;
       case 4:
         return <NewFormAlert />;
@@ -23,18 +23,11 @@ const Index = () => {
         return <GeneratedFormsTable />;
 
       default:
+        return <Recorder />;
     }
   };
 
-  return (
-    <div className="w-full ">
-      {/* <Recorder /> */}
-      {/* <MoreInfo /> */}
-      {/* <Result /> */}
-
-      {ToRander()}
-    </div>
-  );
+  return <div className="w-full ">{ToRander()}</div>;
 };
 
 export default Index;
