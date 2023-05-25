@@ -20,6 +20,8 @@ const Index = () => {
     (state: appDataSlice) => state.setGeneratedForms
   );
 
+  console.log(questionaire);
+
   const apiUrl = useStore((state: EnvSlice) => state.apiURL);
 
   const handleGenerateGoogleForm = async () => {
@@ -67,7 +69,10 @@ const Index = () => {
 
       {questionaire.length !== 0 && (
         <div className="flex items-center justify-center">
-          <button onClick={handleGenerateGoogleForm}>
+          <button
+            onClick={handleGenerateGoogleForm}
+            className="px-8 py-2 rounded-lg bg-purple-500 my-4 hover:bg-purple-400 text-white"
+          >
             Generate Google Form ?{" "}
           </button>
         </div>

@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { appDataSlice } from "@/components/store/appData";
+// import Title from "@components/Home/Title";
 
 export interface IMainLayoutProps {
   children: React.ReactNode;
@@ -38,9 +39,8 @@ export function MainLayout({ children }: IMainLayoutProps) {
   return (
     <Wrapper>
       <Toaster />
-      {/* <div className="min-h-screen w-full flex items-center justify-center bg-gray-100"> */}
-      <div className="min-h-screen w-full flex items-center justify-center ">
-        <div className="w-3/4 min-h-[700px] bg-white rounded-lg p-4 flex flex-col gap-3  ">
+      <div className="min-h-screen w-full flex items-center justify-center bg-gray-100">
+        <div className="w-3/4 min-h-[700px] bg-white rounded-lg p-4 flex flex-col gap-3 items-center justify-center  ">
           {children}
         </div>
       </div>
