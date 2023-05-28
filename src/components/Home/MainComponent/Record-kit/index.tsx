@@ -167,13 +167,14 @@ const Index = () => {
 
       <div className="p-3  flex w-full  items-center justify-center">
         <div className="w-[80%] ">
-          <p className="text-sm text-gray-500 py-1 px-2 bg-yellow-200 rounded-md shadow-md my-2">
+          <p className="text-sm text-gray-500 py-1 px-2  rounded-md  ">
             If this is not exalctly what you have sayed , feel free to edit the
             text
           </p>
           <textarea
-            className="min-h-[60px] w-full p-3 border-2 rounded-md border-gray-200"
+            className="min-h-[60px] w-full p-3 border-[1px] rounded-md border-gray-200"
             value={note}
+            cols={10}
             onChange={(e) => {
               setNote(e.target.value);
             }}
@@ -184,7 +185,7 @@ const Index = () => {
       <div className="w-full flex items-center justify-end gap-10 ">
         <div
           onClick={() => handlNext()}
-          className="w-[90px]  h-[90px] bg-purple-500 rounded-full shadow-md  flex justify-center items-center hover:animate-none cursor-pointer mr-7 mt-10"
+          className="w-[100px]  h-[40px] rounded-md bg-purple-500  shadow-md  flex justify-center items-center hover:animate-none cursor-pointer mr-7 mt-10"
         >
           <p className="text-white text-small">Next {`>>`} </p>
         </div>

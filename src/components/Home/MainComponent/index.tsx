@@ -27,7 +27,7 @@ const Index = () => {
     }
   };
 
-  return <div className="w-full ">{ToRander()}</div>;
+  return <div className="w-full">{ToRander()}</div>;
 };
 
 export default Index;

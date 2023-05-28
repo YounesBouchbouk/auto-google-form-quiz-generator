@@ -12,7 +12,7 @@ const Index = ({ setText }: Props) => {
         <input
           type="text"
           onChange={(e) => setText(e.target.value)}
-          className="rounded-md border-2 border-gray-300 py-2 px-5 w-full"
+          className="rounded-md border-[1px] border-gray-300 py-2 px-5 w-full"
           placeholder="put the API here ... "
         />
       </div>

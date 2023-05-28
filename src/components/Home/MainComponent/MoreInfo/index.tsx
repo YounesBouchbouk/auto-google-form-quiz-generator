@@ -76,19 +76,20 @@ const Index = () => {
   return (
     <div className="w-full">
       <div className="w-full flex flex-col gap-5 justify-center items-center">
-        <div className="w-3/4 border-2 rounded-md border-gray-600">
+        <div className="w-3/4  rounded-md border-gray-600">
           <input
             type="text"
             name=""
             placeholder="set a title for the form"
-            className="py-2 px-5 w-full rounded-md"
+            className="py-2 px-5 w-full rounded-md border-[1px] border-gray-400"
             onChange={(e) => setTitleOfInput(e.target.value)}
           />
         </div>
-        <div className="w-3/4 border-2 rounded-md border-gray-600">
+        <div className="w-3/4 rounded-md border-gray-600">
           <textarea
             placeholder="set a description"
-            className="py-2 px-5 w-full rounded-md"
+            cols={10}
+            className="py-2 px-5 w-full rounded-md border-[1px] border-gray-400"
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
@@ -106,7 +107,7 @@ const Index = () => {
           />
           <label
             htmlFor="bordered-checkbox-1"
-            className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            className="w-full py-4 ml-2 text-sm font-medium text-gray-900 "
           >
             Ask For Full Name ?
           </label>
