@@ -5,7 +5,7 @@ import React from "react";
 const Index = () => {
   const generatedForms = useStore((state) => state.generatedForms);
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg border-2   ">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
@@ -39,7 +39,9 @@ const Index = () => {
                 <td className="px-6 py-4"> {form.description}</td>
 
                 <td className="px-6 py-4">
-                  <Link href={form.link}>{form.link}</Link>
+                  <Link href={form.link}>
+                    <p className="text-purple-500 hover:font-bold">Link</p>
+                  </Link>
                 </td>
                 <td className="px-6 py-4"> {form.createdAt.toString()}</td>
               </tr>

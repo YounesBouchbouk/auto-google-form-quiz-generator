@@ -12,10 +12,10 @@ const Index = () => {
         <p className="text-3xl">A new Form has been generated successfully</p>
       </div>
       <div className="w-full flex items-center justify-center">
-        {generatedForms.length > 1 && (
-          <div className="w-[200px] h-[200px] bg-purple-500 rounded-full shadow-xl animate-spin-slow flex justify-center items-center hover:animate-none cursor-pointer">
+        {generatedForms.length >= 1 && (
+          <div className="  flex justify-center items-center hover:animate-none cursor-pointer">
             <Link href={generatedForms[generatedForms.length - 1].link}>
-              <p className="text-white text-xl">Go To ? </p>
+              <p className="text-purple-500 text-xl">Go To ? </p>
             </Link>
           </div>
         )}

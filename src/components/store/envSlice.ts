@@ -8,6 +8,7 @@ export interface EnvSlice {
     setApiURL: (url: string) => void
     getSavedEnv: () => boolean
     clearApiData: () => void
+    clearLocalStorage : () => boolean
   }
 
 
@@ -17,6 +18,15 @@ export interface EnvSlice {
     openAPI : "" ,
     setApiURL: (apiURL :string) => set(() => ({ apiURL })),
     clearApiData: () => set({}),
+    clearLocalStorage: () => {
+      try {
+         localStorage.removeItem('apiURL')
+        localStorage.removeItem('openAPI')
+
+        return true
+      } catch (e) {}
+        return false
+    },
     getSavedEnv: () => {
       try {
         const apiURL = localStorage.getItem('apiURL')
@@ -33,9 +43,12 @@ export interface EnvSlice {
         if (apiURL && openAPI) {
           return true
         } 
-      } catch (e) {}
+      } catch (e) {
+        return false
+      }
         return false
     },
+    
   })
   
   export default createEnvSlice
