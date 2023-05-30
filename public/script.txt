@@ -1,0 +1,30 @@
+function doPost(e) {
+  var data = JSON.parse(e.postData.contents);
+
+  var form = FormApp.create(data.title);
+  form.setDescription(data.description);
+
+  if (data.askName) {
+    form.addTextItem().setTitle("Name");
+  }
+  if (data.askAge) {
+    form.addTextItem().setTitle("Age");
+  }
+  if (data.askEmail) {
+    form.addTextItem().setTitle("Email");
+  }
+  if (data.askPhone) {
+    form.addTextItem().setTitle("Phone");
+  }
+
+  for (var i = 0; i < data.questionaire.length; i++) {
+    form
+      .addMultipleChoiceItem()
+      .setTitle(data.questionaire[i].question)
+      .setChoiceValues(data.questionaire[i].options);
+  }
+
+  return ContentService.createTextOutput(form.getPublishedUrl()).setMimeType(
+    ContentService.MimeType.JSON
+  );
+}
