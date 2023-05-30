@@ -46,7 +46,7 @@ const Index = () => {
           {getSavedEnv() === true ? (
             <div
               onClick={() => logOut()}
-              className="py-2 text-small  w-[100px] bg-slate-100 rounded-md cursor-pointer hover:text-white hover:bg-purple-500 hover:border-1 hover:border-white  hover:shadow-md"
+              className="py-2 text-xs underline    rounded-md cursor-pointer hover:text-white   hover:shadow-md"
             >
               logOut
             </div>
